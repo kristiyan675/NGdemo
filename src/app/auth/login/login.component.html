@@ -1,5 +1,5 @@
 <div class="container">
-  <form class="login" [formGroup]="loginFormGroup">
+  <form class="login" [formGroup]="loginFormGroup" (ngSubmit)="submitHandler()">
     <fieldset>
       <h2>Login Form</h2>
 
@@ -16,10 +16,22 @@
           placeholder="john.doe@gmail.com"
         />
       </p>
-      <p class="error">Email is required!</p>
-      <!-- <p class="error">
-                Email is not valid!
-            </p> -->
+      <ng-container
+        *ngIf="
+          loginFormGroup.controls['email'].invalid &&
+          loginFormGroup.controls['email'].touched
+        "
+      >
+        <p
+          class="error"
+          *ngIf="loginFormGroup.controls['email'].errors?.required"
+        >
+          Email is required!
+        </p>
+        <p class="error" *ngIf="loginFormGroup.controls['email'].errors?.email">
+          Email is not valid!
+        </p>
+      </ng-container>
 
       <p class="field field-icon">
         <label for="password"
@@ -33,14 +45,23 @@
           placeholder="******"
         />
       </p>
-      <!-- <p class="error">
-                Password is required!
-            </p>
-            <p class="error">
-                Password must be at least 4 characters!
-            </p> -->
 
-      <button (click)="loginHandler()">Login</button>
+      <ng-container
+        *ngIf="
+          loginFormGroup.controls['password'].invalid &&
+          loginFormGroup.controls['password'].touched
+        "
+      >
+        <p
+          class="error"
+          *ngIf="loginFormGroup.controls['password'].errors?.required"
+        >
+          Password is required!
+        </p>
+        <p class="error">Password must be at least 4 characters!</p>
+      </ng-container>
+
+      <button [disabled]="loginFormGroup.invalid">Login</button>
 
       <p class="text-center">
         Have an account?

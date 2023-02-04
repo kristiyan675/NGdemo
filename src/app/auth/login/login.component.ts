@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { emailValidation } from './util';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +16,10 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent {
   loginFormGroup: FormGroup = this.formBuilder.group({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, emailValidation]),
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(5),
+      Validators.minLength(4),
     ]),
   });
 
@@ -28,8 +29,7 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  loginHandler() {
-    this.userService.login();
-    this.router.navigate(['/home']);
+  submitHandler() {
+    console.log(this.loginFormGroup.controls);
   }
 }
