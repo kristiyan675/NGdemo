@@ -1,0 +1,10 @@
+<p>themes works!</p>
+<div class="container">
+  <main>
+    <div class="theme-title">
+      <app-welcome *ngIf="!userService.isLogged"></app-welcome>
+      <app-theme-list></app-theme-list>
+    </div>
+  </main>
+  <app-aside></app-aside>
+</div>
