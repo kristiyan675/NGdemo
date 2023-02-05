@@ -1,4 +1,3 @@
-<p>register works!</p>
 <form
   class="register"
   [formGroup]="registerFormGroup"
@@ -105,8 +104,26 @@
           formControlName="password"
         />
       </p>
-      <p class="error">Password is required!</p>
-      <p class="error">Password must be at least 4 characters!</p>
+
+      <ng-container
+        *ngIf="
+          passwordsGroup.controls['password'].touched &&
+          passwordsGroup.controls['password'].invalid
+        "
+      >
+        <p
+          class="error"
+          *ngIf="passwordsGroup.controls['password'].errors?.required"
+        >
+          Password is required!
+        </p>
+        <p
+          class="error"
+          *ngIf="passwordsGroup.controls['password'].errors?.minlength"
+        >
+          Password must be at least 5 characters!
+        </p>
+      </ng-container>
 
       <!-- rePassword -->
       <p class="field field-icon">
@@ -122,9 +139,17 @@
         />
       </p>
     </div>
-    <!-- <p class="error">Repeat Password does not match password!</p> -->
+    <p
+      class="error"
+      *ngIf="
+        passwordsGroup.controls['rePassword'].touched &&
+        passwordsGroup.controls['rePassword'].invalid
+      "
+    >
+      Repeat Password does not match password!
+    </p>
 
-    <button disabled>Create Account</button>
+    <button>Create Account</button>
 
     <p class="text-center">
       Have an account?

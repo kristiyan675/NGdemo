@@ -30,6 +30,16 @@ export class LoginComponent {
   ) {}
 
   submitHandler() {
-    console.log(this.loginFormGroup.controls);
+    console.log(this.loginFormGroup.value);
+    const { email, password } = this.loginFormGroup.value;
+
+    const body = {
+      email: email,
+      password: password,
+    };
+
+    this.userService.login(body).subscribe((res) => {
+      this.router.navigate(['/home']);
+    });
   }
 }
